@@ -3,8 +3,8 @@ Player.create(username: "genesis", email: "genesis@g.com", password: "word")
 Player.create(username: "player_3", email: "three@cchs.com", password: "third")
 Player.create(username: "player_4", email: "four@cchs.com", password: "fourth")
 
-Team.create(name: "bhs", hometown: "bedford")
-Team.create(name: "cchs", hometown: "concord")
+Team.create(name: "bhs")
+Team.create(name: "cchs")
 
 Game.create(date: 2015)
 Game.create(date: 2016)

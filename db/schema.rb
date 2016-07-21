@@ -32,7 +32,6 @@ ActiveRecord::Schema.define(version: 20160720184059) do
 
   create_table "teams", force: :cascade do |t|
     t.string "name"
-    t.string "hometown"
   end
 
 end
