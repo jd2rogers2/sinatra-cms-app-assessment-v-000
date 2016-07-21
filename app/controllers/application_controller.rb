@@ -1,13 +1,11 @@
 require './config/environment'
-require 'pry'
 
 class ApplicationController < Sinatra::Base
-  configure do
-    set :views, 'app/views'
-    set :public_folder, 'public'
-    enable :sessions
-    set :session_secret, "arcticmonkeys"
-  end
+  register Sinatra::ActiveRecordExtension
+  set :views, 'app/views'
+  set :public_folder, 'public'
+  enable :sessions
+  set :session_secret, "arcticmonkeys"
 
   get '/' do
     erb :index

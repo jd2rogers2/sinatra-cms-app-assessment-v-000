@@ -1,5 +1,11 @@
 <h3>welcome to your homepage <%= @player.username %></h3>
 
-join a team
+<% if flash[:message].include?("First") %>
+  <% flash[:message] %>
+  <a href="add">add</a> or <a href="join">join</a>
+<% end %>
 
-add a game
+<% if flash[:message].include?("Would") %>
+  <% flash[:message] %>
+  <a href="new game">add</a> or <a href="new goal">join</a>
+<% end %>
