@@ -16,7 +16,6 @@ class TeamController < ApplicationController
     @player.team = @team
     @player.save
     @team.save
-    binding.pry
     redirect '/team'
   end
 end

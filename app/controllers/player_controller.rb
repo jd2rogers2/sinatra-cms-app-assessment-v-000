@@ -22,7 +22,6 @@ class PlayerController < ApplicationController
     @player = Player.create(params)
     @session[:id] = @player.id
     @player.save
-    binding.pry
     redirect "/player/#{@player.username}"
   end
 end

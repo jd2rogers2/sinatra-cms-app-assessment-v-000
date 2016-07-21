@@ -2,7 +2,7 @@
 
 your team:
 <% if @player.team %>
-  <a href="/team"><%= @player.team %></a>
+  <a href="/team"><%= @player.team.name %></a>
 <% else %>
   <a href="/team/new">add/find your team</a>
 <% end %>
@@ -11,5 +11,17 @@ your team:
 add a game or a goal
 
 <br></br>
-your recent activity
+<h3>your recent activity</h3>
+
+@player.games.each do |x|
+  played on x.date <br></br>
+    x.goals.each do |y|
+      if y.player_id == @player.id
+        scored in the y.time minute <br></br>
+      end
+    end
+  end
+end
+
+
 

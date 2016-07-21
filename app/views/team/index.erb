@@ -1,3 +1,8 @@
 <h3><%= @player.team.name %></h3>
 <br></br>
-team stats
+@player.team.games.each do |x|
+  played on x.date<br></br>
+  x.goals.each do |y|
+    goal in minute y.time by y.team.name<br></br>
+  end <br></br> 
+end
