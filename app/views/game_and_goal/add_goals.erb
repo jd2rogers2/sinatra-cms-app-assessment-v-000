@@ -1,15 +1,15 @@
 select goal scorers<br></br>
 
-<form method="post" action="game/<%= @game.date %>/show">
+<form method="post" action="/game/<%= @game.date %>/show">
   home team<br></br>
   <% @game.teams[0].players.each do |x| %>
-    <input type="checkbox" name="player[goals][]" value="<%= x %>"><%= x.name %><br></br>
+    <input type="checkbox" name="home[goals][]" value="<%= x.username %>"><%= x.username %> in what minute <input type="text" name="home_goal_minutes[]"><br></br>
   <% end %>
   <br></br>
 
   away team <br></br>
   <% @game.teams[1].players.each do |y| %>
-    <input type="checkbox" name="player[goals][]" value="<%= y %>"><%= y.name %><br></br>
+    <input type="checkbox" name="away[goals][]" value="<%= y.username %>"><%= y.username %> in what minute <input type="text" name="away_goal_minutes[]"><br></br>
   <% end %>
   <input type="submit" name="submit">
 </form>

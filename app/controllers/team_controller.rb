@@ -15,8 +15,10 @@ class TeamController < ApplicationController
     @player = Player.find_by_id(session[:id])
     @team = Team.find_or_create_by(name: params[:name])
     @player.team = @team
+    @team.players << @player
     @player.save
     @team.save
+    # binding.pry
     redirect "/team/#{@team.name}"
   end
 end

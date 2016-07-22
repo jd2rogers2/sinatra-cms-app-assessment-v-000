@@ -23,6 +23,11 @@ ActiveRecord::Schema.define(version: 20160721183411) do
     t.integer "team_id"
   end
 
+  create_table "player_games", force: :cascade do |t|
+    t.integer "player_id"
+    t.integer "game_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string  "username"
     t.string  "email"
@@ -30,18 +35,13 @@ ActiveRecord::Schema.define(version: 20160721183411) do
     t.integer "team_id"
   end
 
-  create_table "players_games", force: :cascade do |t|
-    t.integer "player_id"
+  create_table "team_games", force: :cascade do |t|
+    t.integer "team_id"
     t.integer "game_id"
   end
 
   create_table "teams", force: :cascade do |t|
     t.string "name"
-  end
-
-  create_table "teams_games", force: :cascade do |t|
-    t.integer "team_id"
-    t.integer "game_id"
   end
 
 end

@@ -2,9 +2,13 @@
 <a href="/player/<%= @player.username %>">back to your homepage</a>
 <br></br>
 
+<h4>team's recent activity</h4>  
+
 <% @team.games.each do |x| %>
-  played on <%= x.date %><br></br>
+  game played on <%= x.date %><br></br>
   <% x.goals.each do |y| %>
-    goal in minute <%= y.time %> by <% y.player.username %><br></br>
+    <% if y.team == @team %>
+      goal in minute <%= y.minute %> by <%= y.player.username %><br></br>
+    <% end %>
   <% end %>
 <% end %>

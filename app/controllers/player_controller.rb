@@ -24,4 +24,9 @@ class PlayerController < ApplicationController
     @player.save
     redirect "/player/#{@player.username}"
   end
+
+  get '/logout' do
+    session.delete(:id)
+    redirect '/'
+  end
 end

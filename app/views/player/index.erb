@@ -1,4 +1,5 @@
-<h3>welcome to your homepage <%= @player.username %></h3>
+welcome to your homepage <%= @player.username %>
+<sub><a href="/logout">log out</a></sub><br></br>
 
 your team:
 <% if @player.team %>
@@ -13,15 +14,14 @@ add a new <a href="/game/new">game and goals</a>
 <br></br>
 <h3>your recent activity</h3>
 
-@player.games.each do |x|
-  played on x.date <br></br>
-    x.goals.each do |y|
-      if y.player_id == @player.id
-        scored in the y.time minute <br></br>
-      end
-    end
-  end
-end
+<% @player.games.each do |x| %>
+  game played on <%= x.date %> <br></br>
+  <% x.goals.each do |y| %>
+    <% if y.player == @player %>
+      goal scored in minute <%= y.minute %><br></br>
+    <% end %>
+  <% end %>
+<% end %>
 
 
 

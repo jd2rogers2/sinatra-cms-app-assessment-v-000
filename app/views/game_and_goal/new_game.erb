@@ -2,7 +2,7 @@ to add a result enter a game by date, choose home and away teams<br></br>
 
 <form method="post" action="/game/:date/add_goals">
   add game by date (yyyy) <br></br>
-  <input type="text" name="date"><br></br>
+  <input type="text" name="game_date"><br></br>
 
   home<br></br>
   <% Team.all.each do |x| %>
