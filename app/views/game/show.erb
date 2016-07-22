@@ -1,0 +1,7 @@
+showing stats for game played on <%= @game.date %><br></br>
+
+between <a href="/team/<%= @game.teams[0].name %>"><%= @game.teams[0].name %></a> and <a href="/team/<%= @game.teams[1].name %>"><%= @game.teams[1].name %></a><br></br>
+
+<% @game.goals.each do |x| %>
+  goal in minute <%= x.time %> by <%= x.player %> for <%= x.team %><br></br>
+<% end %>

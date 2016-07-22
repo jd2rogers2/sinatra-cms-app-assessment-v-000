@@ -1,0 +1,17 @@
+to add a result enter a game by date, choose home and away teams<br></br>
+
+<form method="post" action="/game/:date/add_goals">
+  add game by date (yyyy) <br></br>
+  <input type="text" name="date"><br></br>
+
+  home<br></br>
+  <% Team.all.each do |x| %>
+    <input type="radio" name="home_team" value="<%= x.name %>"><%= x.name %><br></br>
+  <% end %>
+
+  away<br></br>
+  <% Team.all.each do |y| %>
+    <input type="radio" name="away_team" value="<%= y.name %>"><%= y.name %><br></br>
+  <% end %>
+  <input type="submit" value="add goals">
+</form>

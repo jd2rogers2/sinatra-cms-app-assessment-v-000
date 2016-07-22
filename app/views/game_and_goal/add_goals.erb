@@ -1,0 +1,15 @@
+select goal scorers<br></br>
+
+<form method="post" action="game/<%= @game.date %>/show">
+  home team<br></br>
+  <% @game.teams[0].players.each do |x| %>
+    <input type="checkbox" name="player[goals][]" value="<%= x %>"><%= x.name %><br></br>
+  <% end %>
+  <br></br>
+
+  away team <br></br>
+  <% @game.teams[1].players.each do |y| %>
+    <input type="checkbox" name="player[goals][]" value="<%= y %>"><%= y.name %><br></br>
+  <% end %>
+  <input type="submit" name="submit">
+</form>

@@ -6,7 +6,6 @@ end
 
 use Rack::MethodOverride
 use PlayerController
-use GameController
+use GameGoalController
 use TeamController
-use GoalController
 run ApplicationController

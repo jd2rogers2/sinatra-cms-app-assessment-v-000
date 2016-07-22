@@ -2,13 +2,13 @@
 
 your team:
 <% if @player.team %>
-  <a href="/team"><%= @player.team.name %></a>
+  <a href="/team/<%= @player.team.name %>"><%= @player.team.name %></a>
 <% else %>
   <a href="/team/new">add/find your team</a>
 <% end %>
 
 <br></br>
-add a game or a goal
+add a new <a href="/game/new">game and goals</a>
 
 <br></br>
 <h3>your recent activity</h3>
