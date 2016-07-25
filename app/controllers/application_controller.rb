@@ -1,4 +1,6 @@
 require './config/environment'
+require 'sinatra/base'
+require 'rack-flash'
 
 class ApplicationController < Sinatra::Base
   register Sinatra::ActiveRecordExtension
@@ -6,9 +8,15 @@ class ApplicationController < Sinatra::Base
   set :public_folder, 'public'
   enable :sessions
   set :session_secret, "arcticmonkeys"
+  use Rack::Flash
 
   get '/' do
-    erb :index
+    if is_logged_in?
+      @player = Player.find_by_id(session[:id])
+      redirect "/player/#{@player.username}"
+    else
+      erb :index
+    end
   end
 
   helpers do

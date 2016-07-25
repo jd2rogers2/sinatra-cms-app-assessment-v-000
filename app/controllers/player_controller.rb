@@ -12,17 +12,25 @@ class PlayerController < ApplicationController
   end
 
   post '/login' do
-    @player = Player.find_by(username: params[:username])
-    session[:id] = @player.id
-    redirect "/player/#{@player.username}"
+    if is_logged_in?
+      @player = Player.find_by(username: params[:username])
+      if params[:password] == @player.password
+        session[:id] = @player.id
+        redirect "/player/#{@player.username}"
+      else
+        redirect '/'
+      end
+    else
+      redirect '/'
+    end
   end
 
   post '/signup' do
-    @session = session
-    @player = Player.create(params)
-    @session[:id] = @player.id
-    @player.save
-    redirect "/player/#{@player.username}"
+      @session = session
+      @player = Player.create(params)
+      @session[:id] = @player.id
+      @player.save
+      redirect "/player/#{@player.username}"
   end
 
   get '/logout' do

@@ -14,6 +14,8 @@ gem 'bcrypt'
 gem 'thin'
 gem 'capybara'
 gem 'require_all'
+gem 'rack-flash3'
+gem 'sinatra-redirect-with-flash'
 
 group :test do
   gem 'rspec'
