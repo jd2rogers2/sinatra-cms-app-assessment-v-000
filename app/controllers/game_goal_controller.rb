@@ -10,20 +10,19 @@ class GameGoalController < ApplicationController
 
   post '/game/:date/add_goals' do
     if is_logged_in?
-      if params[:home_team] != params[:away_team] && params[:game_date].to_s.match(/\b\d{4}\b/)# four numbers
+      if !params[:game_date].to_s.match(/\b\d{4}\b/)
+        flash[:message] = "game date must be in yyyy format"
+        redirect '/game/new'
+      elsif params[:home_team] == params[:away_team]
+        flash[:message] = "home and away teams must be different"
+        redirect '/game/new'
+      else #if home and away aren't the same and 4 numeral date format == true
         @player = Player.find_by_id(session[:id])
         @game = Game.create(date: params[:game_date].to_i)
         @game.teams << Team.find_by(name: params[:home_team])
         @game.teams << Team.find_by(name: params[:away_team])
         @player.games << @game
         erb :'/game_and_goal/add_goals'
-      else
-        if params[:home_team] == params[:away_team]
-          flash[:message] = "input error, home and away teams must be different"
-        elsif !params[:game_date].to_s.match(/\b\d{4}\b/)
-          flash[:message] = "input error, match date must be in yyyy format"
-        end 
-        redirect '/game/new'
       end
     else
       redirect '/'
