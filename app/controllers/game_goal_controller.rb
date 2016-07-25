@@ -18,11 +18,11 @@ class GameGoalController < ApplicationController
         @player.games << @game
         erb :'/game_and_goal/add_goals'
       else
-        # if params[:home_team] == params[:away_team]
-        #   flash[:message] = "input error, home and away teams must be different"
-        # elsif !params[:game_date].to_s.match(/\b\d{4}\b/)
-        #   flash[:message] = "input error, match date must be in yyyy format"
-        # end 
+        if params[:home_team] == params[:away_team]
+          flash[:message] = "input error, home and away teams must be different"
+        elsif !params[:game_date].to_s.match(/\b\d{4}\b/)
+          flash[:message] = "input error, match date must be in yyyy format"
+        end 
         redirect '/game/new'
       end
     else
@@ -59,7 +59,7 @@ class GameGoalController < ApplicationController
           @team.goals << @goal
         end
       else
-        # flash[:message] = "input error, goal time must be in mm format"
+        flash[:message] = "input error, goal time must be in mm format"
         erb :'/game_and_goal/add_goals'
       end
       redirect "/game/#{@game.date}/show"
