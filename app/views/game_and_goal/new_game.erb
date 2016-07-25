@@ -9,14 +9,12 @@ welcome <%= @player.username %>
   year <input type="text" name="game_date[year]"><br></br>
   
   <p>
-  choose home and away teams
+  choose teams
   </p>
 
   <div class="one">
-    home<br></br>
-    <% Team.all.each do |x| %>
-      <input type="radio" name="home_team" value="<%= x.name %>"><%= x.name %><br></br>
-    <% end %>
+    team 1<br></br>
+    <input type="radio" name="home_team" value="<%= @player.team.name %>" checked><%= @player.team.name %><br></br>
   </div>
 
   <div class="two">
@@ -24,9 +22,11 @@ welcome <%= @player.username %>
   </div>
 
   <div class="three">
-    away<br></br>
+    team 2<br></br>
     <% Team.all.each do |y| %>
-      <input type="radio" name="away_team" value="<%= y.name %>"><%= y.name %><br></br>
+      <% if @player.team != y %>
+        <input type="radio" name="away_team" value="<%= y.name %>"><%= y.name %><br></br>
+      <% end %>
     <% end %>
   </div>
   
