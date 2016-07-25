@@ -59,6 +59,7 @@ class GameGoalController < ApplicationController
           @team.goals << @goal
         end
       else
+        # flash[:message] = "input error, goal time must be in mm format"
         erb :'/game_and_goal/add_goals'
       end
       redirect "/game/#{@game.date}/show"

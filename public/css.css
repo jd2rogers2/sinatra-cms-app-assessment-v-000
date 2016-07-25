@@ -8,6 +8,10 @@ h1 {
   color: blue;
 }
 
+.flash {
+  color: red;
+}
+
 #one, #three {
   display: inline-block;
   border: solid black 1px;

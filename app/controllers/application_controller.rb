@@ -1,14 +1,12 @@
 require './config/environment'
-require 'sinatra/base'
-require 'rack-flash3'
 
 class ApplicationController < Sinatra::Base
   register Sinatra::ActiveRecordExtension
+  register Sinatra::Flash
   set :views, 'app/views'
   set :public_folder, 'public'
   enable :sessions
   set :session_secret, "arcticmonkeys"
-  use Rack::Flash
 
   get '/' do
     if is_logged_in?

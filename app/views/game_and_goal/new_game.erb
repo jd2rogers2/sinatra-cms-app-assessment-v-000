@@ -1,5 +1,11 @@
 to add a result enter a game by date, choose home and away teams<br></br>
 
+<div class="flash">
+  <% if flash[:message] %>
+    <%= flash[:message] %>
+  <% end %><br></br>
+</div> <!-- flash -->
+
 <form method="post" action="/game/:date/add_goals">
   add game by date (yyyy) <br></br>
   <input type="text" name="game_date"><br></br>

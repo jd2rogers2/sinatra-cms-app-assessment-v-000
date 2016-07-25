@@ -1,5 +1,11 @@
 select goal scorers and input time scored (mm)<br></br>
 
+<div class="flash">
+  <% if flash[:message] %>
+    <%= flash[:message] %>
+  <% end %><br></br>
+</div> <!-- flash -->
+
 <form method="post" action="/game/<%= @game.date %>/show">
   home team<br></br>
   <% @game.teams[0].players.each do |x| %>
