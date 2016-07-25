@@ -33,6 +33,8 @@ class GameGoalController < ApplicationController
   post '/game/:date/show' do
     #left off here trying to make goal minutes be entered in correct format
     #currently redirecting to the wrong place and not adding goals
+    # added month and day to view and changed params, time to update controller
+    # also check first two notes above
     if is_logged_in?
       @game = Game.find_by(date: params[:date])
       if params[:home_goal_minutes].to_s.match(/\b\d{0,2}\b/) && params[:away_goal_minutes].to_s.match(/\b\d{0,2}\b/)# two numbers
