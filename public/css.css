@@ -12,17 +12,22 @@ h1 {
   color: red;
 }
 
-#one, #three {
+.one, .three {
   display: inline-block;
   border: solid black 1px;
   padding: 20px;
   margin: 20px;
 }
 
-#two {
+.two {
   display: inline-block;
   padding: 20px;
   margin: 20px;
+}
+
+.four {
+  float: center;
+  clear: both;
 }
 
 #ball {

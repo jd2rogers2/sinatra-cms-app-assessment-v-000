@@ -1,20 +1,34 @@
+
 welcome <%= @player.username %>
 <sub><a href="/logout">log out</a></sub><br></br>
-
-to add a result enter a game by date, choose home and away teams<br></br>
 
 <form method="post" action="/game/:date/add_goals">
   add game by date (yyyy) <br></br>
   <input type="text" name="game_date"><br></br>
+  
+  <p>
+  choose home and away teams
+  </p>
 
-  home<br></br>
-  <% Team.all.each do |x| %>
-    <input type="radio" name="home_team" value="<%= x.name %>"><%= x.name %><br></br>
-  <% end %>
+  <div class="one">
+    home<br></br>
+    <% Team.all.each do |x| %>
+      <input type="radio" name="home_team" value="<%= x.name %>"><%= x.name %><br></br>
+    <% end %>
+  </div>
 
-  away<br></br>
-  <% Team.all.each do |y| %>
-    <input type="radio" name="away_team" value="<%= y.name %>"><%= y.name %><br></br>
-  <% end %>
-  <input type="submit" value="add goals">
+  <div class="two">
+    vs.
+  </div>
+
+  <div class="three">
+    away<br></br>
+    <% Team.all.each do |y| %>
+      <input type="radio" name="away_team" value="<%= y.name %>"><%= y.name %><br></br>
+    <% end %>
+  </div>
+  
+  <div class="four">
+    <input type="submit" value="add goals">
+  </div> <!-- four -->
 </form>
