@@ -4,6 +4,11 @@
     <input type="password" name="password" value="password"><br></br>
     <input type="submit" value="log in">
   </form><br></br>
+  <div class="flash">
+  <% if flash[:message] %>
+    <%= flash[:message] %>
+  <% end %>
+</div> <!-- flash -->
 </div> <!-- div one -->
 
 <div id="two">

@@ -18,6 +18,7 @@ class PlayerController < ApplicationController
         session[:id] = @player.id
         redirect "/player/#{@player.username}"
       else
+        #flash[:message] = "incorrect username or password"
         redirect '/'
       end
     else

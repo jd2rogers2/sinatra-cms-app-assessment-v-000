@@ -1,6 +1,6 @@
 require './config/environment'
 require 'sinatra/base'
-require 'rack-flash'
+require 'rack-flash3'
 
 class ApplicationController < Sinatra::Base
   register Sinatra::ActiveRecordExtension
