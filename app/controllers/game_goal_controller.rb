@@ -2,6 +2,7 @@ class GameGoalController < ApplicationController
 
   get '/game/new' do
     if is_logged_in?
+      @player = Player.find_by_id(session[:id])
       erb :'/game_and_goal/new_game'
     else
       redirect '/'
@@ -34,7 +35,7 @@ class GameGoalController < ApplicationController
     #currently redirecting to the wrong place and not adding goals
     if is_logged_in?
       @game = Game.find_by(date: params[:date])
-      if params[:home_goal_minutes].to_s.match(/\b\d{2}\b/) && params[:away_goal_minutes].to_s.match(/\b\d{2}\b/)# two numbers
+      if params[:home_goal_minutes].to_s.match(/\b\d{0,2}\b/) && params[:away_goal_minutes].to_s.match(/\b\d{0,2}\b/)# two numbers
         params[:home_goal_minutes].each_with_index do |min, ind|
           @goal = Goal.create(minute: min.to_i)
           @goal.game = @game
@@ -57,11 +58,12 @@ class GameGoalController < ApplicationController
           @goal.team = @team
           @team.goals << @goal
         end
+        redirect "/game/#{@game.date}/show"
       else
         flash[:message] = "input error, goal time must be in mm format"
+        @player = Player.find_by_id(session[:id])
         erb :'/game_and_goal/add_goals'
       end
-      redirect "/game/#{@game.date}/show"
     else
       redirect '/'
     end
