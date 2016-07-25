@@ -3,8 +3,10 @@ welcome <%= @player.username %>
 <sub><a href="/logout">log out</a></sub><br></br>
 
 <form method="post" action="/game/:date/add_goals">
-  add game by date (yyyy) <br></br>
-  <input type="text" name="game_date"><br></br>
+  add game by date <br></br>
+  day <input type="text" name="game_date[day]">
+  month <input type="text" name="game_date[month]">
+  year <input type="text" name="game_date[year]"><br></br>
   
   <p>
   choose home and away teams
