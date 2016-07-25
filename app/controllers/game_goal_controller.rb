@@ -12,8 +12,9 @@ class GameGoalController < ApplicationController
   post '/game/:date/add_goals' do
     if is_logged_in?
       if params[:game_date][:year].to_s.match(/\b\d{4}\b/) && params[:game_date][:month].to_s.match(/\b\d{1,2}\b/) && params[:game_date][:day].to_s.match(/\b\d{1,2}\b/)
+        @player = Player.find_by_id(session[:id])
+        Time.new(params[:game_date][:year], params[:game_date][:month], params[:game_date][:day])
         binding.pry
-        # @player = Player.find_by_id(session[:id])
         # @game = Game.create(date: params[:game_date].to_i)
         # @game.teams << Team.find_by(name: params[:home_team])
         # @game.teams << Team.find_by(name: params[:away_team])

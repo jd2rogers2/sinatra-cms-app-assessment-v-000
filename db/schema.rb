@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20160721183411) do
 
   create_table "games", force: :cascade do |t|
-    t.date "date"
+    t.date "datetime"
   end
 
   create_table "goals", force: :cascade do |t|

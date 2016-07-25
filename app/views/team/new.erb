@@ -4,7 +4,7 @@ welcome <%= @player.username %>
 <form method="post" action="/team">
   <%= @player.username %>, add new team or join an existing team<br></br>
 
-  <input type="radio"><input type="text" name="new_team_name" value="team name"><br></br>
+  <input type="radio"><input type="text" name="new_team_name" value="new team name"><br></br>
 
   <% Team.all.each do |x| %>
     <input type="radio" name="existing_team_name" value="<%= x.name %>"><%= x.name %><br></br>

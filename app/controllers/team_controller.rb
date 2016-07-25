@@ -20,9 +20,8 @@ class TeamController < ApplicationController
   end
 
   post '/team' do
-    binding.pry
     if is_logged_in?
-      if params.has_key?("new_team_name") && params[:new_team_name] != ""
+      if params.has_key?("new_team_name") && params[:new_team_name] != "" && params[:new_team_name] != "new team name" 
         if Team.find_by(name: params[:new_team_name])
           flash[:message] = "team name already exists in database"
           redirect '/team/new'
