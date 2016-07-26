@@ -41,14 +41,16 @@ class GameGoalController < ApplicationController
         a.players.each do |x|
           if params.has_key?("#{x.username}_quantity")
             number = params["#{x.username}_quantity"].to_i
-            if !params["#{x.username}_quantity"].match(/\d{1,2}/) || !params["#{x.username}_quantity"].match(/\A\z/)
+            if params["#{x.username}_quantity"].match(/\d{1,2}/) || params["#{x.username}_quantity"].match(/\A\z/)
+            else
               flash[:message] = "goal quantity entry must only be digits"
               redirect "/game/#{@game.datetime}/add_goals"
             end
             minutes_array = params["#{x.username}_minutes"][0].split(", ")
-            minutes_array.each do |x|
-              if !x.match(/\d{1,2}/)
-                flash[:message] = "minute(s) scored must be digits separated by ', '"
+            binding.pry
+            minutes_array.each do |element|
+              if element.match(/\d{1,2}/) == false
+                flash[:message] = "goal time(s) must be digits separated by ', '"
                 redirect "/game/#{@game.datetime}/add_goals"
               end
             end
@@ -68,7 +70,6 @@ class GameGoalController < ApplicationController
           end
         end
       end
-      binding.pry
       erb :'/game/show'
     else
       redirect '/'

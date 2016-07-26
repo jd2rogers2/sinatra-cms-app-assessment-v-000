@@ -9,6 +9,7 @@ class ApplicationController < Sinatra::Base
   set :session_secret, "arcticmonkeys"
 
   get '/' do
+    # binding.pry
     if is_logged_in?
       @player = Player.find_by_id(session[:id])
       redirect "/player/#{@player.username}"

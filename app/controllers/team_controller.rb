@@ -47,4 +47,13 @@ class TeamController < ApplicationController
       redirect '/'
     end
   end
+
+  get '/team/edit' do
+    if is_logged_in?
+      @player = Player.find_by_id(session[:id])
+      erb :'/team/new'
+    else
+      redirect '/'
+    end
+  end
 end
