@@ -9,6 +9,12 @@ class GameGoalController < ApplicationController
     end
   end
 
+  get '/game/:date/add_goals' do
+    @player = Player.find_by_id(session[:id])
+    @game = Game.find_by(datetime: params[:date])
+    erb :'/game_and_goal/add_goals'
+  end
+
   post '/game/:date/add_goals' do
     if is_logged_in?
       if params[:game_date][:year].to_s.match(/\b\d{4}\b/) && params[:game_date][:month].to_s.match(/\b\d{1,2}\b/) && params[:game_date][:day].to_s.match(/\b\d{1,2}\b/)
@@ -18,9 +24,9 @@ class GameGoalController < ApplicationController
         @game.teams << Team.find_by(name: params[:home_team])
         @game.teams << Team.find_by(name: params[:away_team])
         @player.games << @game
-        erb :'/game_and_goal/add_goals'
+        redirect "/game/#{@game.datetime}/add_goals"
       else
-        flash[:message] = "game date must be numbers in dd/mm/yyyy format"
+        flash[:message] = "game date must be numbers in yyyy/mm/dd format"
         redirect '/game/new'
       end
     else
@@ -35,13 +41,17 @@ class GameGoalController < ApplicationController
       @game.teams[0].players.each do |x|
         if params.has_key?("#{x.username}_quantity")
           number = params["#{x.username}_quantity"].to_i
-          #if number == 0 
-            # if !params["#{x.username}_quantity"].match(/\d{1,2}/)
-              # flash message and redirect back, else proceed
+          if !params["#{x.username}_quantity"].match(/\d{1,2}/)
+            flash[:message] = "goal quantity entry must only be digits"
+            redirect '/'
+          end
           minutes_array = params["#{x.username}_minutes"][0].split(", ")
-          # minutes_array.each do |x|
-          #   if !x.match(/\d{1,2}/)
-          #     flash message redirect back, else proceed
+          minutes_array.each do |x|
+            if !x.match(/\d{1,2}/)
+              flash[:message] = "minute(s) scored must be digits separated by ', '"
+              redirect back
+            end
+          end
           counter = 0
           number.times do
             @goal = Goal.create(minute: minutes_array[counter])
