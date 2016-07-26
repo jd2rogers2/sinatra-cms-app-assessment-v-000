@@ -1,9 +1,13 @@
 welcome <%= @player.username %>
-<sub><a href="/logout">log out</a></sub><br></br>
+<sub><a href="/player/<%= @player.username %>">homepage</a></sub> <sub><a href="/logout">log out</a></sub>
+
 
 <h3><%= @team.name %></h3>
-<a href="/player/<%= @player.username %>">back to your homepage</a>
-<br></br>
+
+<h4>team roster</h4>
+<% @team.players.each do |y| %>
+  <%= y.username %> 
+<% end %>
 
 <h4>team's recent activity</h4>  
 

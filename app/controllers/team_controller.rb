@@ -9,6 +9,15 @@ class TeamController < ApplicationController
     end
   end
 
+  get '/team/edit' do
+    if is_logged_in?
+      @player = Player.find_by_id(session[:id])
+      erb :'/team/new'
+    else
+      redirect '/'
+    end
+  end
+
   get '/team/:name' do
     if is_logged_in?
       @player = Player.find_by_id(session[:id])
@@ -43,15 +52,6 @@ class TeamController < ApplicationController
           redirect "/team/#{@team.name}"
         end
       end
-    else
-      redirect '/'
-    end
-  end
-
-  get '/team/edit' do
-    if is_logged_in?
-      @player = Player.find_by_id(session[:id])
-      erb :'/team/new'
     else
       redirect '/'
     end

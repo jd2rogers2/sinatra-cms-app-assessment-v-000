@@ -4,7 +4,7 @@ welcome to your homepage <%= @player.username %>
 your team:
 <% if @player.team %>
   <a href="/team/<%= @player.team.name %>"><%= @player.team.name %></a>
-  <sub><a href="/team/edit">change your team</a></sub>
+  <sub><a href="/team/edit">change team</a></sub>
 <% else %>
   <a href="/team/new">add/find your team</a>
 <% end %>
