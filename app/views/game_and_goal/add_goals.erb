@@ -1,9 +1,9 @@
 welcome <%= @player.username %>
 <sub><a href="/logout">log out</a></sub><br></br>
 
-select goal scorers and input time scored (mm)<br></br>
+select goal scorers and input time scored (mm) for game on <%= @game.datetime %><br></br>
 
-<form method="post" action="/game/<%= @game.date %>/show">
+<form method="post" action="/game/<%= @game.datetime %>/show">
   home team<br></br>
   <% @game.teams[0].players.each do |x| %>
     <input type="checkbox" name="home[goals][]" value="<%= x.username %>"><%= x.username %> in what minute <input type="text" name="home_goal_minutes[]"><br></br>

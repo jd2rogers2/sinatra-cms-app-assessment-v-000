@@ -8,7 +8,7 @@ welcome <%= @player.username %>
 <h4>team's recent activity</h4>  
 
 <% @team.games.each do |x| %>
-  game played on <%= x.date %><br></br>
+  game played on <%= x.datetime %><br></br>
   <% x.goals.each do |y| %>
     <% if y.team == @team %>
       goal in minute <%= y.minute %> by <%= y.player.username %><br></br>

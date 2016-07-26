@@ -4,7 +4,7 @@ welcome to your homepage <%= @player.username %>
 your team:
 <% if @player.team %>
   <a href="/team/<%= @player.team.name %>"><%= @player.team.name %></a>
-  <sub><a href="/edit">change your team</a></sub><br></br>
+  <sub><a href="/edit">change your team</a></sub>
 <% else %>
   <a href="/team/new">add/find your team</a>
 <% end %>
@@ -16,7 +16,7 @@ add a new <a href="/game/new">game and goals</a>
 <h3>your recent activity</h3>
 
 <% @player.games.each do |x| %>
-  game played on <%= x.date %> <br></br>
+  game played on <%= x.datetime %> <br></br>
   <% x.goals.each do |y| %>
     <% if y.player == @player %>
       goal scored in minute <%= y.minute %><br></br>
