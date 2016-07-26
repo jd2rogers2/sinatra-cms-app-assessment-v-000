@@ -35,55 +35,36 @@ class GameGoalController < ApplicationController
   end
 
   post '/game/:date/show' do
-    binding.pry
     if is_logged_in?
       @game = Game.find_by(datetime: params[:date])
-      @game.teams[0].players.each do |x|
-        if params.has_key?("#{x.username}_quantity")
-          number = params["#{x.username}_quantity"].to_i
-          if !params["#{x.username}_quantity"].match(/\d{1,2}/)
-            flash[:message] = "goal quantity entry must only be digits"
-            redirect '/'
-          end
-          minutes_array = params["#{x.username}_minutes"][0].split(", ")
-          minutes_array.each do |x|
-            if !x.match(/\d{1,2}/)
-              flash[:message] = "minute(s) scored must be digits separated by ', '"
-              redirect back
+      @game.teams.each do |a|
+        a.players.each do |x|
+          if params.has_key?("#{x.username}_quantity")
+            number = params["#{x.username}_quantity"].to_i
+            if !params["#{x.username}_quantity"].match(/\d{1,2}/)
+              flash[:message] = "goal quantity entry must only be digits"
+              redirect "/game/#{@game.datetime}/add_goals"
             end
-          end
-          counter = 0
-          number.times do
-            @goal = Goal.create(minute: minutes_array[counter])
-            counter += 1
-            @goal.game = @game
-            @game.goals << @goal
-            @player = Player.find_by(username: "#{x.username}")
-            @goal.player = @player
-            @player.goals << @goal
-            @team = @player.team
-            @goal.team = @team
-            @team.goals << @goal
-          end
-        end
-      end
-
-      @game.teams[1].players.each do |y|
-        if params.has_key?("#{y.username}_quantity")
-          number = params["#{y.username}_quantity"].to_i
-          minutes_array = params["#{y.username}_minutes"][0].split(", ")
-          counter = 0
-          number.times do
-            @goal = Goal.create(minute: minutes_array[counter])
-            counter += 1
-            @goal.game = @game
-            @game.goals << @goal
-            @player = Player.find_by(username: "#{y.username}")
-            @goal.player = @player
-            @player.goals << @goal
-            @team = @player.team
-            @goal.team = @team
-            @team.goals << @goal
+            minutes_array = params["#{x.username}_minutes"][0].split(", ")
+            minutes_array.each do |x|
+              if !x.to_i.match(/\d{1,2}/)
+                flash[:message] = "minute(s) scored must be digits separated by ', '"
+                redirect "/game/#{@game.datetime}/add_goals"
+              end
+            end
+            counter = 0
+            number.times do
+              @goal = Goal.create(minute: minutes_array[counter])
+              counter += 1
+              @goal.game = @game
+              @game.goals << @goal
+              @player = Player.find_by(username: "#{x.username}")
+              @goal.player = @player
+              @player.goals << @goal
+              @team = @player.team
+              @goal.team = @team
+              @team.goals << @goal
+            end
           end
         end
       end
