@@ -20,7 +20,7 @@ class GameGoalController < ApplicationController
         @player.games << @game
         erb :'/game_and_goal/add_goals'
       else
-        flash[:message] = "game date must be numerals in dd/mm/yyyy format"
+        flash[:message] = "game date must be numbers in dd/mm/yyyy format"
         redirect '/game/new'
       end
     else
@@ -29,45 +29,93 @@ class GameGoalController < ApplicationController
   end
 
   post '/game/:date/show' do
-    #left off here trying to make goal minutes be entered in correct format
-    #currently redirecting to the wrong place and not adding goals
-    # added month and day to view and changed params, time to update controller
-    # also check first two notes above
     binding.pry
     if is_logged_in?
-      @game = Game.find_by(date: params[:date])
-      if params[:home_goal_minutes].to_s.match(/\b\d{0,2}\b/) && params[:away_goal_minutes].to_s.match(/\b\d{0,2}\b/)# two numbers
-        params[:home_goal_minutes].each_with_index do |min, ind|
-          @goal = Goal.create(minute: min.to_i)
-          @goal.game = @game
-          @game.goals << @goal
-          @player = Player.find_by(username: params[:home][:goals][ind])
-          @goal.player = @player
-          @player.goals << @goal
-          @team = @player.team
-          @goal.team = @team
-          @team.goals << @goal
+      @game = Game.find_by(datetime: params[:date])
+      @game.teams[0].players.each do |x|
+        if params.has_key?("#{x.username}_quantity")
+          number = params["#{x.username}_quantity"].to_i
+          minutes_array = params["#{x.username}_minutes"][0].split(", ")
+          counter = 0
+          number.times do
+            @goal = Goal.create(minute: minutes_array[counter])
+            counter += 1
+            @goal.game = @game
+            @game.goals << @goal
+            @player = Player.find_by(username: "#{x.username}")
+            @goal.player = @player
+            @player.goals << @goal
+            @team = @player.team
+            @goal.team = @team
+            @team.goals << @goal
+          end
         end
-        params[:away_goal_minutes].each_with_index do |min, ind|
-          @goal = Goal.create(minute: min.to_i)
-          @goal.game = @game
-          @game.goals << @goal
-          @player = Player.find_by(username: params[:away][:goals][ind])
-          @goal.player = @player
-          @player.goals << @goal
-          @team = @player.team
-          @goal.team = @team
-          @team.goals << @goal
-        end
-        redirect "/game/#{@game.date}/show"
-      else
-        flash[:message] = "input error, time of goal must be in mm format"
-        @player = Player.find_by_id(session[:id])
-        erb :'/game_and_goal/add_goals'
       end
+      @game.teams[1].players.each do |y|
+        if params.has_key?("#{y.username}_quantity")
+          number = params["#{y.username}_quantity"].to_i
+          minutes_array = params["#{y.username}_minutes"][0].split(", ")
+          counter = 0
+          number.times do
+            @goal = Goal.create(minute: minutes_array[counter])
+            counter += 1
+            @goal.game = @game
+            @game.goals << @goal
+            @player = Player.find_by(username: "#{y.username}")
+            @goal.player = @player
+            @player.goals << @goal
+            @team = @player.team
+            @goal.team = @team
+            @team.goals << @goal
+          end
+        end
+      end
+      erb :'/game/show'
     else
       redirect '/'
     end
+
+
+    # if is_logged_in?
+    #   @game = Game.find_by(datetime: params[:date]) 
+    #   params[:home_goal_minutes].each_with_index do |min, ind|
+    #     if params[:home_goal_minutes] != "" && params[:home_goal_minutes].to_s.match(/\b\d{0,2}\b/)
+    #       @goal = Goal.create(minute: min.to_i)
+    #       @goal.game = @game
+    #       @game.goals << @goal
+    #       @player = Player.find_by(username: params[:home][:goals][ind])
+    #       @goal.player = @player
+    #       @player.goals << @goal
+    #       @team = @player.team
+    #       @goal.team = @team
+    #       @team.goals << @goal
+    #     else
+    #       flash[:message] = "input error, time of goal must be in mm format"
+    #       @player = Player.find_by_id(session[:id])
+    #       erb :'/game_and_goal/add_goals' #not what i want to do here
+    #     end
+    #   end
+    #   params[:away_goal_minutes].each_with_index do |min, ind|
+    #     if params[:away_goal_minutes] != "" && params[:away_goal_minutes].to_s.match(/\b\d{1,2}\b/)# two numbers
+    #       @goal = Goal.create(minute: min.to_i)
+    #       @goal.game = @game
+    #       @game.goals << @goal
+    #       @player = Player.find_by(username: params[:away][:goals][ind])
+    #       @goal.player = @player
+    #       @player.goals << @goal
+    #       @team = @player.team
+    #       @goal.team = @team
+    #       @team.goals << @goal
+    #     else
+    #       flash[:message] = "input error, time of goal must be in mm format"
+    #       @player = Player.find_by_id(session[:id])
+    #       erb :'/game_and_goal/add_goals'
+    #     end
+    #   end
+    #   redirect "/game/#{@game.datetime}/show"
+    # else
+    #   redirect '/'
+    # end
   end
 
   get '/game/:date/show' do

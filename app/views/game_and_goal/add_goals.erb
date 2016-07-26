@@ -1,18 +1,19 @@
 welcome <%= @player.username %>
 <sub><a href="/logout">log out</a></sub><br></br>
 
-select goal scorers and input time scored (mm) for game on <%= @game.datetime %><br></br>
+enter quantity and time scored (mm with comma space separation) for game on <%= @game.datetime %><br></br>
 
 <form method="post" action="/game/<%= @game.datetime %>/show">
-  home team<br></br>
+  home team
+  <p>player | quantity | minute(s)</p>
   <% @game.teams[0].players.each do |x| %>
-    <input type="checkbox" name="home[goals][]" value="<%= x.username %>"><%= x.username %> in what minute <input type="text" name="home_goal_minutes[]"><br></br>
+    <%= x.username %><input type="text" name="<%= x.username %>_quantity"> <input type="text" name="<%= x.username %>_minutes[]"><br></br>
   <% end %>
-  <br></br>
 
-  away team <br></br>
+  away team
+  <p>player | quantity | minute(s)</p>
   <% @game.teams[1].players.each do |y| %>
-    <input type="checkbox" name="away[goals][]" value="<%= y.username %>"><%= y.username %> in what minute <input type="text" name="away_goal_minutes[]"><br></br>
+    <%= y.username %><input type="text" name="<%= y.username %>_quantity"> <input type="text" name="<%= y.username %>_minutes[]"><br></br>
   <% end %>
   <input type="submit" name="submit">
 </form>
