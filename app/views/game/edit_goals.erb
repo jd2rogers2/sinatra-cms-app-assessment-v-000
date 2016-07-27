@@ -1,0 +1,5 @@
+  home team
+  <p>player | quantity | minute(s)</p>
+  <% @game.teams[0].players.each do |x| %>
+    <%= x.username %><input type="text" name="<%= x.username %>_quantity"> <input type="text" name="<%= x.username %>_minutes[]"><br></br>
+  <% end %>

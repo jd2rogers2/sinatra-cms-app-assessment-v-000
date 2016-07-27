@@ -5,7 +5,7 @@ welcome <%= @player.username %>
 editing game played on <%= @game.datetime %><br></br>
 
 
-<form method="post" action="just_edited">
+<form method="post" action="/game/edit">
   <input type="hidden">
 
   <div class="four">
@@ -21,17 +21,13 @@ editing game played on <%= @game.datetime %><br></br>
   </div> <!-- one -->
 
   <div class="three">
-  <select>
-    <% Team.all.each do |x| %>
-      <option name="new_team" value="<%= x.name %>"><%= x.name %></option>
-    <% end %>
-  </select>
+    team 2 <br></br>
+    <select>
+      <% Team.all.each do |x| %>
+        <option name="new_team" value="<%= x.name %>"><%= x.name %></option>
+      <% end %>
+    </select>
   </div> <!-- three -->
-
-  <div class="four">
-    <% @game.goals.each do |y| %>
-    <% end %>
-  </div> <!-- four -->
 
   <div class="four">
     <input type="submit" value="submit">
