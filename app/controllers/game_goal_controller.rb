@@ -47,9 +47,8 @@ class GameGoalController < ApplicationController
               redirect "/game/#{@game.datetime}/add_goals"
             end
             minutes_array = params["#{x.username}_minutes"][0].split(", ")
-            binding.pry
             minutes_array.each do |element|
-              if element.scan(/\D/).empty?
+              if !element.scan(/\D/).empty?
                 flash[:message] = "goal time(s) must be digits separated by ', '"
                 redirect "/game/#{@game.datetime}/add_goals"
               end
@@ -79,10 +78,15 @@ class GameGoalController < ApplicationController
   get '/game/:date/show' do
     if is_logged_in?
       @player = Player.find_by_id(session[:id])
-      @game = Game.find_by(date: params[:date])
+      @game = Game.find_by(datetime: params[:date])
       erb :'/game/show'
     else
       redirect '/'
     end
+  end
+
+  get '/game/:date/edit' do
+    @game = Game.find_by(datetime: params[:date])
+    erb :'/game/show'
   end
 end

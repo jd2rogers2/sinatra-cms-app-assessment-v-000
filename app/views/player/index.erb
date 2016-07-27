@@ -16,7 +16,7 @@ your team:
 <h3>your recent activity</h3>
 
 <% @player.games.each do |x| %>
-  game played on <%= x.datetime %> <br></br>
+  game played on <%= x.datetime %> <sub><a href="/game/<%= x.datetime %>/show">view</a></sub> <br></br>
   <% x.goals.each do |y| %>
     <% if y.player == @player %>
       goal scored in minute <%= y.minute %><br></br>
