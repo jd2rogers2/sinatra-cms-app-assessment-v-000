@@ -23,7 +23,16 @@ class GameGoalController < ApplicationController
         @game = Game.create(datetime: @time)
         @game.teams << Team.find_by(name: params[:home_team])
         @game.teams << Team.find_by(name: params[:away_team])
-        @player.games << @game
+        @game.players << Team.find_by(name: params[:home_team]).players
+        @game.players << Team.find_by(name: params[:away_team]).players
+        @game.players.each do |playa|
+          playa.games << @game
+          playa.save
+        end
+        @game.teams.each do |no_i|
+          no_i.games << @game
+          no_i.save
+        end
         redirect "/game/#{@game.datetime}/add_goals"
       else
         flash[:message] = "game date must be numbers in yyyy/mm/dd format"
@@ -105,7 +114,34 @@ class GameGoalController < ApplicationController
   end
 
   post '/game/:date/edit' do
+    binding.pry
     @game = Game.find_by(datetime: params[:date])
+    @player = Player.find_by_id(session[:id])
+    @time = Time.new(params[:game_date][:year].to_i, params[:game_date][:month].to_i, params[:game_date][:day].to_i)
+    @game.datetime = @time
+    @game.teams.clear
+    @game.teams << Team.find_by(name: params[:away_team])
+    @game.teams << Team.find_by(name: @player.team.name)
+    @game.players.clear
+    @game.players << Team.find_by(name: params[:away_team]).players
+    @game.players << Team.find_by(name: @player.team.name)
+    @game.save
+    @game.players.each do |a|
+      a.games.each do |z|
+        if z.id == @game.id
+          z.datetime = @time
+        end
+      end
+      a.save
+    end
+    @game.teams.each do |x|
+      x.games.each do |y|
+        if y.id == @game.id
+          y.datetime = @time
+        end
+      end
+      x.save
+    end
     binding.pry
     redirect "/game/#{@game.datetime}/edit_goals"
   end

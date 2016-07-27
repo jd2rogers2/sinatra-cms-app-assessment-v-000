@@ -21,14 +21,12 @@ editing game played on <%= @game.datetime %><br></br>
   </div> <!-- one -->
 
   <div class="three">
-    team 2 <br></br>
-    <select>
-      <% Team.all.each do |x| %>
-        <% if x.name != @player.team.name %>
-          <option name="new_team" value="<%= x.name %>"><%= x.name %></option>
-        <% end %>
+    team 2<br></br>
+    <% Team.all.each do |y| %>
+      <% if @player.team != y %>
+        <input type="radio" name="away_team" value="<%= y.name %>"><%= y.name %><br></br>
       <% end %>
-    </select>
+    <% end %>
   </div> <!-- three -->
 
   <div class="four">
