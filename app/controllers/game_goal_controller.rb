@@ -88,7 +88,7 @@ class GameGoalController < ApplicationController
   get '/game/:date/edit' do
     @game = Game.find_by(datetime: params[:date])
     @player = Player.find_by_id(session[:id])
-    erb :'/game/edit'
+    erb :'/game/edit_game'
     # @game.teams.each do |x|
     #   x.games.drop(@game)
     #   x.players.each do |y|
@@ -102,5 +102,16 @@ class GameGoalController < ApplicationController
     # end
     # @game.destroy
     # redirect '/game/new'
+  end
+
+  post '/game/:date/edit' do
+    @game = Game.find_by(datetime: params[:date])
+    binding.pry
+    redirect "/game/#{@game.datetime}/edit_goals"
+  end
+
+  get '/game/:date/edit_goals' do
+    @game = Game.find_by(datetime: params[:date])
+    erb :'/game/edit_goals'
   end
 end

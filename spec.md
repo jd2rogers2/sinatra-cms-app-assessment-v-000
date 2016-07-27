@@ -12,7 +12,7 @@ Specs:
 - [x] Include user accounts
    - to signup, a user must create an account with a username, email, and password. they can then only log in if their username and password match the instance saved in the player table in the database
 - [x] Ensure that users can't modify content created by other users
-   - content cannot be modified at all
+   - if statements around all edit links ensure user can only edit games their team was involved in
 - [x] Include user input validations
    - have included if statements (mostly with regex) to ensure the input's format is correct
 - [x] Display validation failures to user with error message (example form URL e.g. /posts/new)
