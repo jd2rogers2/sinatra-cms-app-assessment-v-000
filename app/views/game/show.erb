@@ -2,12 +2,12 @@ welcome <%= @player.username %>
 <sub><a href="/logout">log out</a></sub><br></br>
 
 <a href="/player/<%= @player.username %>">back to your homepage</a><br></br>
-<h4>showing stats for game played on <%= @game.datetime %></h4>
+showing stats for game played on <%= @game.datetime %>
 <% if @game.players.include?(@player) %>
-  <sub><a href="/game/<%= x.datetime %>/edit">edit</a></sub>
+  <sub><a href="/game/<%= @game.datetime %>/edit">edit</a></sub>
 <% end %><br></br>
 
-<sub>between <a href="/team/<%= @game.teams[0].name %>"><%= @game.teams[0].name %></a> and <a href="/team/<%= @game.teams[1].name %>"><%= @game.teams[1].name %></a></sub><br></br>
+<a href="/team/<%= @game.teams[0].name %>"><%= @game.teams[0].name %></a> vs. <a href="/team/<%= @game.teams[1].name %>"><%= @game.teams[1].name %></a><br></br>
 
 <% @game.goals.each do |x| %>
   goal in minute <%= x.minute %> by <%= x.player.username %> for <%= x.team.name %><br></br>
