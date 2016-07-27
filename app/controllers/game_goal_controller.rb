@@ -49,7 +49,7 @@ class GameGoalController < ApplicationController
             minutes_array = params["#{x.username}_minutes"][0].split(", ")
             binding.pry
             minutes_array.each do |element|
-              if element.match(/\d{1,2}/) == false
+              if element.scan(/\D/).empty?
                 flash[:message] = "goal time(s) must be digits separated by ', '"
                 redirect "/game/#{@game.datetime}/add_goals"
               end
