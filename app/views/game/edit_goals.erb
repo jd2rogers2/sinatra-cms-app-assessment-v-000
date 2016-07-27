@@ -1,5 +1,24 @@
+welcome <%= @player.username %>
+<sub><a href="/logout">log out</a></sub><br></br>
+
+enter quantity and time scored (mm with comma space separation) for game on <%= @game.datetime %><br></br>
+
+previously enterred goal scoreres are as follows: <br></br>
+<% @game.goals.each do |gol| %>
+  goal scored by <%= gol.player %> in minute <%= gol.minute %><br></br>
+<% end %>
+
+<form method="post" action="/game/<%= @game.datetime %>/show">
   home team
   <p>player | quantity | minute(s)</p>
   <% @game.teams[0].players.each do |x| %>
     <%= x.username %><input type="text" name="<%= x.username %>_quantity"> <input type="text" name="<%= x.username %>_minutes[]"><br></br>
   <% end %>
+
+  away team
+  <p>player | quantity | minute(s)</p>
+  <% @game.teams[1].players.each do |y| %>
+    <%= y.username %><input type="text" name="<%= y.username %>_quantity"> <input type="text" name="<%= y.username %>_minutes[]"><br></br>
+  <% end %>
+  <input type="submit" name="submit">
+</form>

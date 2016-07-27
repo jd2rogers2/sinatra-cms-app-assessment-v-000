@@ -46,6 +46,15 @@ class GameGoalController < ApplicationController
   post '/game/:date/show' do
     if is_logged_in?
       @game = Game.find_by(datetime: params[:date])
+      if @game.goals.empty? == false # if goals is not empty then we're editing...
+        # not creating so delete all old goals + relationships then create new ones
+        @game.goals.each do |z|
+          z.player.goals.drop(z)
+          z.team.goals.drop(z)
+          z.destroy
+        end
+        @game.goals.clear
+      end
       @game.teams.each do |a|
         a.players.each do |x|
           if params.has_key?("#{x.username}_quantity")
@@ -98,19 +107,6 @@ class GameGoalController < ApplicationController
     @game = Game.find_by(datetime: params[:date])
     @player = Player.find_by_id(session[:id])
     erb :'/game/edit_game'
-    # @game.teams.each do |x|
-    #   x.games.drop(@game)
-    #   x.players.each do |y|
-    #     y.games.drop(@game)
-    #   end
-    # end
-    # @game.goals.each do |z|
-    #   z.player.goals.drop(z)
-    #   z.team.goals.drop(z)
-    #   z.destroy
-    # end
-    # @game.destroy
-    # redirect '/game/new'
   end
 
   post '/game/:date/edit' do
