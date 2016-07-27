@@ -5,7 +5,7 @@ enter quantity and time scored (mm with comma space separation) for game on <%= 
 
 previously enterred goal scoreres are as follows: <br></br>
 <% @game.goals.each do |gol| %>
-  goal scored by <%= gol.player %> in minute <%= gol.minute %><br></br>
+  goal scored by <%= gol.player.username %> in minute <%= gol.minute %><br></br>
 <% end %>
 
 <form method="post" action="/game/<%= @game.datetime %>/show">

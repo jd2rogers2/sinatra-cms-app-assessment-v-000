@@ -103,47 +103,59 @@ class GameGoalController < ApplicationController
     end
   end
 
-  get '/game/:date/edit' do
+  post '/game/:date/edit' do
     @game = Game.find_by(datetime: params[:date])
     @player = Player.find_by_id(session[:id])
-    erb :'/game/edit_game'
+    if params[:game_date][:year].to_s.match(/\b\d{4}\b/) && params[:game_date][:month].to_s.match(/\b\d{1,2}\b/) && params[:game_date][:day].to_s.match(/\b\d{1,2}\b/)
+      @time = Time.new(params[:game_date][:year].to_i, params[:game_date][:month].to_i, params[:game_date][:day].to_i)
+      @game.datetime = @time
+      @game.teams.clear
+      @game.teams << Team.find_by(name: params[:away_team])
+      @game.teams << Team.find_by(name: @player.team.name)
+      @game.players.clear
+      @game.players << Team.find_by(name: params[:away_team]).players
+      @game.players << Team.find_by(name: @player.team.name).players
+      @game.save
+      @game.players.each do |a|
+        a.games.each do |z|
+          if z.id == @game.id
+            z.datetime = @time
+          end
+        end
+        a.save
+      end
+      @game.teams.each do |x|
+        x.games.each do |y|
+          if y.id == @game.id
+            y.datetime = @time
+          end
+        end
+        x.save
+      end
+      redirect "/game/#{@game.datetime}/edit_goals"
+    else
+      flash[:message] = "game date must be numbers in yyyy/mm/dd format"
+      redirect "/game/#{@game.datetime}/edit"
+    end
   end
 
-  post '/game/:date/edit' do
-    binding.pry
-    @game = Game.find_by(datetime: params[:date])
-    @player = Player.find_by_id(session[:id])
-    @time = Time.new(params[:game_date][:year].to_i, params[:game_date][:month].to_i, params[:game_date][:day].to_i)
-    @game.datetime = @time
-    @game.teams.clear
-    @game.teams << Team.find_by(name: params[:away_team])
-    @game.teams << Team.find_by(name: @player.team.name)
-    @game.players.clear
-    @game.players << Team.find_by(name: params[:away_team]).players
-    @game.players << Team.find_by(name: @player.team.name)
-    @game.save
-    @game.players.each do |a|
-      a.games.each do |z|
-        if z.id == @game.id
-          z.datetime = @time
-        end
-      end
-      a.save
+  get '/game/:date/edit' do
+    if is_logged_in
+      @game = Game.find_by(datetime: params[:date])
+      @player = Player.find_by_id(session[:id])
+      erb :'/game/edit_game'
+    else
+      redirect '/'
     end
-    @game.teams.each do |x|
-      x.games.each do |y|
-        if y.id == @game.id
-          y.datetime = @time
-        end
-      end
-      x.save
-    end
-    binding.pry
-    redirect "/game/#{@game.datetime}/edit_goals"
   end
 
   get '/game/:date/edit_goals' do
-    @game = Game.find_by(datetime: params[:date])
-    erb :'/game/edit_goals'
+    if is_logged_in
+      @game = Game.find_by(datetime: params[:date])
+      @player = Player.find_by_id(session[:id])
+      erb :'/game/edit_goals'
+    else
+      redirect '/'
+    end 
   end
 end
