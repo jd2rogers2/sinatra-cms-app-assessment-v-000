@@ -1,0 +1,40 @@
+welcome <%= @player.username %>
+<sub><a href="/logout">log out</a></sub><br></br>
+
+<a href="/player/<%= @player.username %>">back to your homepage</a><br></br>
+editing game played on <%= @game.datetime %><br></br>
+
+
+<form method="post" action="just_edited">
+  <input type="hidden">
+
+  <div class="four">
+    change date<br></br>
+    year <input type="text" name="game_date[year]">
+    month <input type="text" name="game_date[month]">
+    day <input type="text" name="game_date[day]"><br></br>
+  </div>
+
+  <div class="one">
+    team 1 <br></br>
+    <%= @player.team %>
+  </div> <!-- one -->
+
+  <div class="three">
+  <select>
+    <% Team.all.each do |x| %>
+      <option name="new_team" value="<%= x.name %>"><%= x.name %></option>
+    <% end %>
+  </select>
+  </div> <!-- three -->
+
+  <div class="four">
+    <% @game.goals.each do |y| %>
+    <% end %>
+  </div> <!-- four -->
+
+  <div class="four">
+    <input type="submit" value="submit">
+  </div> <!-- four -->
+</form>
+
