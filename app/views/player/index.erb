@@ -9,8 +9,10 @@ your team:
   <a href="/team/new">add/find your team</a>
 <% end %>
 
-<br></br>
-<a href="/game/new">add a new game and goals</a>
+<% if @player.team != nil %>
+  <br></br>
+  <a href="/game/new">add a new game and goals</a>
+<% end %>
 
 <br></br>
 <h3>your recent activity</h3>

@@ -25,17 +25,10 @@ class GameGoalController < ApplicationController
         @game.teams << Team.find_by(name: params[:away_team])
         @game.players << Team.find_by(name: params[:home_team]).players
         @game.players << Team.find_by(name: params[:away_team]).players
-        # @game only has 1 cr7 as of here
-        @game.players.each do |playa|
-          playa.games << @game
-          playa.save
-        end
-        binding.pry
         @game.teams.each do |no_i|
           no_i.games << @game
           no_i.save
         end
-        binding.pry
         redirect "/game/#{@game.datetime}/add_goals"
       else
         flash[:message] = "game date must be numbers in yyyy/mm/dd format"
@@ -47,7 +40,6 @@ class GameGoalController < ApplicationController
   end
 
   post '/game/:date/show' do
-    binding.pry
     if is_logged_in?
       @game = Game.find_by(datetime: params[:date])
       if @game.goals.empty? == false # if goals is not empty then we're editing...
@@ -86,10 +78,10 @@ class GameGoalController < ApplicationController
             @team = @player.team
             @goal.team = @team
             @team.goals << @goal
-            binding.pry
           end
         end
       end
+      @player = Player.find_by_id(session[:id])
       erb :'/game/show'
     else
       redirect '/'
