@@ -1,7 +1,6 @@
 welcome <%= @player.username %>
-<sub><a href="/logout">log out</a></sub><br></br>
+<sub><a href="/player/<%= @player.username %>">homepage</a> <a href="/logout">log out</a></sub><br></br>
 
-<a href="/player/<%= @player.username %>">back to your homepage</a><br></br>
 showing stats for game played on <%= @game.datetime %>
 <% if @game.players.include?(@player) %>
   <sub><a href="/game/<%= @game.datetime %>/edit">edit</a></sub>

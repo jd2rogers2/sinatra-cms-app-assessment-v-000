@@ -1,6 +1,5 @@
-
 welcome <%= @player.username %>
-<sub><a href="/logout">log out</a></sub><br></br>
+<sub><a href="/player/<%= @player.username %>">homepage</a> <a href="/logout">log out</a></sub><br></br>
 
 <form method="post" action="/game/:date/add_goals">
   add game by date <br></br>

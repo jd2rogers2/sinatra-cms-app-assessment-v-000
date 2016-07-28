@@ -25,10 +25,6 @@ class GameGoalController < ApplicationController
         @game.teams << Team.find_by(name: params[:away_team])
         @game.players << Team.find_by(name: params[:home_team]).players
         @game.players << Team.find_by(name: params[:away_team]).players
-        @game.teams.each do |no_i|
-          no_i.games << @game
-          no_i.save
-        end
         redirect "/game/#{@game.datetime}/add_goals"
       else
         flash[:message] = "game date must be numbers in yyyy/mm/dd format"

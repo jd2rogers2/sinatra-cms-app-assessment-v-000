@@ -1,24 +1,40 @@
+rooney = Player.create(username: "Rooney", email: "player1@email.com", password: "player1")
+messi = Player.create(username: "Messi", email: "player2@email.com", password: "player2")
+bale = Player.create(username: "Bale", email: "player3@email.com", password: "player3")
+ozil = Player.create(username: "Ozil", email: "player4@email.com", password: "player4")
+ronaldo = Player.create(username: "Ronaldo", email: "player5@email.com", password: "player5")
+pogba = Player.create(username: "Pogba", email: "player6@email.com", password: "player6")
+iniesta = Player.create(username: "Iniesta", email: "player7@email.com", password: "player7")
+gg = Player.create(username: "Buffon", email: "player8@email.com", password: "player8")
+kane = Player.create(username: "Kane", email: "player9@email.com", password: "player9")
 
-player1 = Player.create(username: "player1", email: "player1@email.com", password: "player1")
-player2 = Player.create(username: "player2", email: "player2@email.com", password: "player2")
-player3 = Player.create(username: "player3", email: "player3@email.com", password: "player3")
-player4 = Player.create(username: "player4", email: "player4@email.com", password: "player4")
-player5 = Player.create(username: "player5", email: "player5@email.com", password: "player5")
-player6 = Player.create(username: "player6", email: "player6@email.com", password: "player6")
-player7 = Player.create(username: "player7", email: "player7@email.com", password: "player7")
-player8 = Player.create(username: "player8", email: "player8@email.com", password: "player8")
+real = Team.create(name: "Real Madrid")
+manu = Team.create(name: "Man u")
+barca = Team.create(name: "Barca")
+bayern = Team.create(name: "Bayern")
+spurs = Team.create(name: "Tottenham")
+arsenal = Team.create(name: "Arsenal")
+juve = Team.create(name: "Juventus")
 
-team1 = Team.create(name: "team1")
-team2 = Team.create(name: "team2")
+rooney.team = manu
+messi.team = barca
+bale.team = real
+ozil.team = arsenal
+ronaldo.team = real
+pogba.team = juve
+iniesta.team = barca
+gg.team = juve
+kane.team = spurs
 
-player1.team = team1
-player2.team = team1
-player3.team = team2
-player4.team = team2
-player5.team = team1
-player6.team = team1
-player7.team = team2
-player8.team = team2
+spurs.players << kane
+real.players << bale
+real.players << ronaldo
+manu.players << rooney
+arsenal.players << ozil
+barca.players << messi
+barca.players << iniesta
+juve.players << gg
+juve.players << pogba
 
 # player1 = Player.create(username: "james", email: "james@james.com", password: "pass")
 # player2 = Player.create(username: "genesis", email: "genesis@g.com", password: "word")
