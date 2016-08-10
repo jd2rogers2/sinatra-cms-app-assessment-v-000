@@ -21,7 +21,7 @@ class PlayerController < ApplicationController
         redirect '/'
       else # do find username
         @player = Player.find_by(username: params[:username])
-        if params[:password] == @player.password
+        if @player.authenticate(params[:password])
           session[:id] = @player.id
           redirect "/player/#{@player.username}"
         else # incorrect password
@@ -36,14 +36,13 @@ class PlayerController < ApplicationController
     #if email or username already exists
     if Player.find_by(username: params[:username])
       flash[:message] = "username already exists"
-      redirect '/'
+      erb :index
     elsif Player.find_by(email: params[:email])
       flash[:message] = "account already associated with this email"
-      redirect '/'
+      erb :index
     else
-      @session = session
       @player = Player.create(params)
-      @session[:id] = @player.id
+      session[:id] = @player.id
       @player.save
       redirect "/player/#{@player.username}"
     end

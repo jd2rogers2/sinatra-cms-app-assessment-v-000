@@ -3,6 +3,8 @@ class Player < ActiveRecord::Base
   belongs_to :team
   has_many :games, through: :player_games
   has_many :goals
+
+  has_secure_password
 end
 
 # player player player

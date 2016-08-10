@@ -22,6 +22,7 @@ class TeamController < ApplicationController
     if is_logged_in?
       @player = Player.find_by_id(session[:id])
       @team = Team.find_by(name: params[:name])
+      @roster = @team.players
       erb :'/team/index'
     else
       redirect '/'

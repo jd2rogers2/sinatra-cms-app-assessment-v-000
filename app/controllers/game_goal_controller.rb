@@ -66,13 +66,10 @@ class GameGoalController < ApplicationController
           number.times do
             @goal = Goal.create(minute: minutes_array[counter])
             counter += 1
-            @goal.game = @game
             @game.goals << @goal
             @player = Player.find_by(username: "#{x.username}")
-            @goal.player = @player
             @player.goals << @goal
             @team = @player.team
-            @goal.team = @team
             @team.goals << @goal
           end
         end
@@ -99,7 +96,7 @@ class GameGoalController < ApplicationController
     @player = Player.find_by_id(session[:id])
     if params[:game_date][:year].to_s.match(/\b\d{4}\b/) && params[:game_date][:month].to_s.match(/\b\d{1,2}\b/) && params[:game_date][:day].to_s.match(/\b\d{1,2}\b/)
       @time = Time.new(params[:game_date][:year].to_i, params[:game_date][:month].to_i, params[:game_date][:day].to_i)
-      @game.datetime = @time
+      @game.update(datetime: @time)
       @game.teams.clear
       @game.teams << Team.find_by(name: params[:away_team])
       @game.teams << Team.find_by(name: @player.team.name)
@@ -107,22 +104,6 @@ class GameGoalController < ApplicationController
       @game.players << Team.find_by(name: params[:away_team]).players
       @game.players << Team.find_by(name: @player.team.name).players
       @game.save
-      @game.players.each do |a|
-        a.games.each do |z|
-          if z.id == @game.id
-            z.datetime = @time
-          end
-        end
-        a.save
-      end
-      @game.teams.each do |x|
-        x.games.each do |y|
-          if y.id == @game.id
-            y.datetime = @time
-          end
-        end
-        x.save
-      end
       redirect "/game/#{@game.datetime}/edit_goals"
     else
       flash[:message] = "game date must be numbers in yyyy/mm/dd format"
